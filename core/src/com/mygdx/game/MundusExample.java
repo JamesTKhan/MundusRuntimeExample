@@ -76,6 +76,7 @@ public class MundusExample extends ApplicationAdapter {
 
 			Fog fog = scene.environment.getFog();
 			fog.color.set(Color.BLACK);
+			fog.density = 0.002f;
 		}
 
 		// Move camera towards current destination
