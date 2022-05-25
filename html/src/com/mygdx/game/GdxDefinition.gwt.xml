@@ -4,6 +4,9 @@
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 
 	<inherits name='MundusExample' />
+	<inherits name="commons" />
+	<inherits name="com.mbrlabs.mundus" />
+
 	<entry-point class='com.mygdx.game.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
