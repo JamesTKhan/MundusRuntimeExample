@@ -62,3 +62,7 @@ waterFoam.png
 waterFoam.png.meta
 waterNormal.png
 waterNormal.png.meta
+star_night.png
+star_night.png.meta
+night.sky
+night.sky.meta

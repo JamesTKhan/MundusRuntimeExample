@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mbrlabs.mundus.commons.Scene;
 import com.mbrlabs.mundus.commons.assets.SkyboxAsset;
+import com.mbrlabs.mundus.commons.env.Fog;
 import com.mbrlabs.mundus.runtime.Mundus;
 
 import static com.badlogic.gdx.Application.LOG_INFO;
@@ -67,10 +69,13 @@ public class MundusExample extends ApplicationAdapter {
 			controller.setVelocity(200f);
 		}
 
-		// How to change to a different skybox at runtime
+		// How to change skybox and fog at runtime
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
-			SkyboxAsset asset = (SkyboxAsset) mundus.getAssetManager().findAssetByFileName("default.sky");
+			SkyboxAsset asset = (SkyboxAsset) mundus.getAssetManager().findAssetByFileName("night.sky");
 			scene.setSkybox(asset, mundus.getShaders().getSkyboxShader());
+
+			Fog fog = scene.environment.getFog();
+			fog.color.set(Color.BLACK);
 		}
 
 		// Move camera towards current destination
