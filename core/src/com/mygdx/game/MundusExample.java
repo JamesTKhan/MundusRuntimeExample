@@ -1,31 +1,105 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.mbrlabs.mundus.commons.Scene;
+import com.mbrlabs.mundus.commons.assets.SkyboxAsset;
+import com.mbrlabs.mundus.runtime.Mundus;
+
+import static com.badlogic.gdx.Application.LOG_INFO;
 
 public class MundusExample extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+	private FPSLogger fpsLogger;
+	private ModelBatch batch;
+
+	private Mundus mundus;
+	private Scene scene;
+
+	private FirstPersonCameraController controller;
+
+	private float camFlySpeed = 20f;
+	private Array<Vector3> cameraDestinations;
+	private int currentCameraDestIndex = 0;
+	private final Vector3 lookAtPos = new Vector3(800,0,800);
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		batch = new ModelBatch();
+		fpsLogger = new FPSLogger();
+
+		Gdx.app.setLogLevel(LOG_INFO);
+
+		// setup mundus & load our scene
+		mundus = new Mundus(Gdx.files.internal("MundusExampleProject"));
+		scene = mundus.loadScene("Main Scene.mundus", batch);
+
+		scene.cam.position.set(0, 40, 0);
+
+		// setup input
+		controller = new FirstPersonCameraController(scene.cam);
+		controller.setVelocity(200f);
+		Gdx.input.setInputProcessor(controller);
+
+		cameraDestinations = new Array<>();
+		cameraDestinations.add(new Vector3(100, 100, 100));
+		cameraDestinations.add(new Vector3(1500, 100, 100));
+		cameraDestinations.add(new Vector3(1500, 300, 1500));
+		cameraDestinations.add(new Vector3(100, 300, 1500));
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+		// How to change scenes
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
+			scene = mundus.loadScene("Second Scene.mundus", batch);
+			scene.cam.position.set(0, 40, 0);
+			controller = new FirstPersonCameraController(scene.cam);
+			controller.setVelocity(200f);
+		}
+
+		// How to change to a different skybox at runtime
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
+			SkyboxAsset asset = (SkyboxAsset) mundus.getAssetManager().findAssetByFileName("default.sky");
+			scene.setSkybox(asset, mundus.getShaders().getSkyboxShader());
+		}
+
+		// Move camera towards current destination
+		Vector3 dir = scene.cam.position.cpy().sub(cameraDestinations.get(currentCameraDestIndex)).nor();
+		scene.cam.position.mulAdd(dir, -camFlySpeed * Gdx.graphics.getDeltaTime());
+
+		scene.cam.lookAt(lookAtPos);
+		scene.cam.up.set(Vector3.Y);
+
+		// Update camera destination
+		if (scene.cam.position.dst(cameraDestinations.get(currentCameraDestIndex) ) <= 2f) {
+			currentCameraDestIndex++;
+			if (currentCameraDestIndex >= cameraDestinations.size)
+				currentCameraDestIndex = 0;
+		}
+
+		// Send camera back to beginning it if wanders off too far
+		if (scene.cam.position.dst(cameraDestinations.get(0)) > 2500)
+			scene.cam.position.set(cameraDestinations.get(0));
+
+		controller.update();
+		scene.sceneGraph.update();
+		scene.render();
+		fpsLogger.log();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		mundus.dispose();
 	}
 }

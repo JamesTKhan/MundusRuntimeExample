@@ -1,0 +1,64 @@
+33ed_map_Ship2_01.mat
+33ed_map_Ship2_01.mat.meta
+aerial_beach_01_diff_2k.jpg
+aerial_beach_01_diff_2k.jpg.meta
+aerial_rocks_02_diff_2k.jpg
+aerial_rocks_02_diff_2k.jpg.meta
+chessboard.png
+chessboard.png.meta
+clouds.sky
+clouds.sky.meta
+clouds1_down.png
+clouds1_down.png.meta
+clouds1_east.png
+clouds1_east.png.meta
+clouds1_north.png
+clouds1_north.png.meta
+clouds1_south.png
+clouds1_south.png.meta
+clouds1_up.png
+clouds1_up.png.meta
+clouds1_west.png
+clouds1_west.png.meta
+coast_sand_rocks_02_diff_2k.jpg
+coast_sand_rocks_02_diff_2k.jpg.meta
+d2e00.png
+d2e00.png.meta
+default.sky
+default.sky.meta
+dudv.png
+dudv.png.meta
+map_Ship2_01_BaseColor.png
+map_Ship2_01_BaseColor.png.meta
+Ship2_0002.gltf
+Ship2_0002.gltf.meta
+skybox_default.png
+skybox_default.png.meta
+Terrain 2.terra
+Terrain 2.terra.meta
+Terrain 25.terra
+Terrain 25.terra.meta
+Water 10.water
+Water 10.water.meta
+Water 11.water
+Water 11.water.meta
+Water 12.water
+Water 12.water.meta
+Water 13.water
+Water 13.water.meta
+Water 3.water
+Water 3.water.meta
+Water 5.water
+Water 5.water.meta
+Water 6.water
+Water 6.water.meta
+Water 7.water
+Water 7.water.meta
+Water 8.water
+Water 8.water.meta
+Water 9.water
+Water 9.water.meta
+waterFoam.png
+waterFoam.png.meta
+waterNormal.png
+waterNormal.png.meta
