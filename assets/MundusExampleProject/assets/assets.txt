@@ -30,10 +30,14 @@ dudv.png
 dudv.png.meta
 map_Ship2_01_BaseColor.png
 map_Ship2_01_BaseColor.png.meta
+night.sky
+night.sky.meta
 Ship2_0002.gltf
 Ship2_0002.gltf.meta
 skybox_default.png
 skybox_default.png.meta
+star_night.png
+star_night.png.meta
 Terrain 2.terra
 Terrain 2.terra.meta
 Terrain 25.terra
@@ -62,7 +66,3 @@ waterFoam.png
 waterFoam.png.meta
 waterNormal.png
 waterNormal.png.meta
-star_night.png
-star_night.png.meta
-night.sky
-night.sky.meta
