@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mbrlabs.mundus.commons.Scene;
 import com.mbrlabs.mundus.commons.assets.SkyboxAsset;
-import com.mbrlabs.mundus.commons.env.Fog;
 import com.mbrlabs.mundus.runtime.Mundus;
+import net.mgsx.gltf.scene3d.attributes.FogAttribute;
 
 import static com.badlogic.gdx.Application.LOG_INFO;
 
@@ -40,7 +41,7 @@ public class MundusExample extends ApplicationAdapter {
 
 		// setup mundus & load our scene
 		mundus = new Mundus(Gdx.files.internal("MundusExampleProject"));
-		scene = mundus.loadScene("Main Scene.mundus", batch);
+		scene = mundus.loadScene("Main Scene.mundus");
 
 		scene.cam.position.set(0, 40, 0);
 
@@ -63,7 +64,8 @@ public class MundusExample extends ApplicationAdapter {
 
 		// How to change scenes
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) {
-			scene = mundus.loadScene("Second Scene.mundus", batch);
+			scene.dispose();
+			scene = mundus.loadScene("Second Scene.mundus");
 			scene.cam.position.set(0, 40, 0);
 			controller = new FirstPersonCameraController(scene.cam);
 			controller.setVelocity(200f);
@@ -74,9 +76,14 @@ public class MundusExample extends ApplicationAdapter {
 			SkyboxAsset asset = (SkyboxAsset) mundus.getAssetManager().findAssetByFileName("night.sky");
 			scene.setSkybox(asset, mundus.getShaders().getSkyboxShader());
 
-			Fog fog = scene.environment.getFog();
-			fog.color.set(Color.BLACK);
-			fog.density = 0.002f;
+			ColorAttribute colorAttribute = (ColorAttribute) scene.environment.get(ColorAttribute.Fog);
+			colorAttribute.color.set(Color.BLACK);
+
+			scene.environment.getAmbientLight().intensity = 0.1f;
+
+			FogAttribute fogAttribute = (FogAttribute) scene.environment.get(FogAttribute.FogEquation);
+			fogAttribute.value.x = 100f; // Near plane
+			fogAttribute.value.y = 500f; // Far plane
 		}
 
 		// Move camera towards current destination

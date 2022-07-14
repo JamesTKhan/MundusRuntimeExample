@@ -1,5 +1,14 @@
-#Tue May 24 13:25:31 EDT 2022
-opacity=0.0
-shininess=0.0
-diffuse.color=ffffffff
+#Thu Jul 14 02:12:15 EDT 2022
+map.normal=b674876720c5456c9d1086da3146b2c9
+normalScale=1.0
+occlusionTexture=ee2416d3a5ae47c8867f6ffcf11511c1
 diffuse.texture=c8b6904b01c84f31a43aa007ab11bae1
+cullFace=-1
+emissive.color=000000ff
+opacity=1.0
+roughness=1.0
+shadowBias=0.35
+diffuse.color=ffffffff
+alphaTest=0.0
+metallic=0.35
+metallicRoughTexture=ee2416d3a5ae47c8867f6ffcf11511c1
