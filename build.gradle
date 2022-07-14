@@ -23,13 +23,13 @@ allprojects {
     version = '1.0'
     ext {
         appName = "MundusRuntimeExample"
-        gdxVersion = '1.11.0'
+        gdxVersion = '1.10.0'
         roboVMVersion = '2.3.16'
         box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
-        mundusVersion = 'v0.3.1'
+        mundusVersion = '0.3.1'
     }
 
     repositories {
@@ -86,7 +86,7 @@ project(":html") {
 
         api "com.github.jpooleycodes.mundus:gdx-runtime:$mundusVersion:sources"
         api "com.github.jpooleycodes.mundus:commons:$mundusVersion:sources"
-        
+
     }
 }
 
