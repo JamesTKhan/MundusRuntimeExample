@@ -138,9 +138,9 @@ public class MundusExample extends ApplicationAdapter {
 		// Render progress bar
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setColor(Color.DARK_GRAY);
-		shapeRenderer.rect(0f, 20f, Gdx.graphics.getWidth(), 20f);
+		shapeRenderer.rect(0f, Gdx.graphics.getHeight() * .5f, Gdx.graphics.getWidth(), 20f);
 		shapeRenderer.setColor(mundusTeal);
-		shapeRenderer.rect(0f, 20f, mundus.getProgress() * Gdx.graphics.getWidth(), 20f);
+		shapeRenderer.rect(0f, Gdx.graphics.getHeight() * .5f, mundus.getProgress() * Gdx.graphics.getWidth(), 20f);
 		shapeRenderer.end();
 
 		if (mundus.continueLoading()) {
