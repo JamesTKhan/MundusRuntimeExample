@@ -1,7 +1,9 @@
-#Wed May 11 08:40:33 EDT 2022
+#Wed Jul 27 01:02:51 EDT 2022
+rotateSpeed=0.1
 positiveZ=f2e2fb2a66bd43adbf4266c91b2af093
 positiveY=1f72089769ad4bbd8824f5ecaa31a28d
 negativeZ=f6f8175b3b554038a311270cc2cfcf9f
 positiveX=237f8d31ef0d4a2fb2a50e905ae918a8
 negativeY=ae6b206e0d75425e831411ee979ca589
 negativeX=ee9eeb3618ef4a1a81c8ee126130862d
+rotateEnabled=true

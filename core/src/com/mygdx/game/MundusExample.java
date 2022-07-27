@@ -6,9 +6,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mbrlabs.mundus.commons.Scene;
@@ -25,12 +27,22 @@ public class MundusExample extends ApplicationAdapter {
 	private Mundus mundus;
 	private Scene scene;
 
-	private FirstPersonCameraController controller;
+	private GameState gameState = GameState.LOADING;
 
-	private float camFlySpeed = 20f;
+	private FirstPersonCameraController controller;
+	private OrthographicCamera guiCamera;
+	private ShapeRenderer shapeRenderer;
+	private Color mundusTeal = new Color(0x00b695ff);
+
+	private final float camFlySpeed = 20f;
 	private Array<Vector3> cameraDestinations;
 	private int currentCameraDestIndex = 0;
 	private final Vector3 lookAtPos = new Vector3(800,0,800);
+
+	enum GameState {
+		LOADING,
+		PLAYING
+	}
 
 	@Override
 	public void create () {
@@ -39,26 +51,35 @@ public class MundusExample extends ApplicationAdapter {
 
 		Gdx.app.setLogLevel(LOG_INFO);
 
-		// setup mundus & load our scene
-		mundus = new Mundus(Gdx.files.internal("MundusExampleProject"));
-		scene = mundus.loadScene("Main Scene.mundus");
+		guiCamera = new OrthographicCamera();
+		guiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		scene.cam.position.set(0, 40, 0);
-
-		// setup input
-		controller = new FirstPersonCameraController(scene.cam);
-		controller.setVelocity(200f);
-		Gdx.input.setInputProcessor(controller);
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setProjectionMatrix(guiCamera.combined);
 
 		cameraDestinations = new Array<>();
 		cameraDestinations.add(new Vector3(100, 100, 100));
 		cameraDestinations.add(new Vector3(1500, 100, 100));
 		cameraDestinations.add(new Vector3(1500, 300, 1500));
 		cameraDestinations.add(new Vector3(100, 300, 1500));
+
+		// Start asynchronous loading
+		mundus = new Mundus(Gdx.files.internal("MundusExampleProject"), true);
 	}
 
 	@Override
 	public void render () {
+		switch (gameState) {
+			case LOADING:
+				continueLoading();
+				break;
+			case PLAYING:
+				play();
+				break;
+		}
+	}
+
+	private void play() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -109,7 +130,35 @@ public class MundusExample extends ApplicationAdapter {
 		scene.render();
 		fpsLogger.log();
 	}
-	
+
+	/**
+	 * Continue loading mundus asynchronously
+	 */
+	private void continueLoading() {
+		// Render progress bar
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		shapeRenderer.setColor(Color.DARK_GRAY);
+		shapeRenderer.rect(0f, 20f, Gdx.graphics.getWidth(), 20f);
+		shapeRenderer.setColor(mundusTeal);
+		shapeRenderer.rect(0f, 20f, mundus.getProgress() * Gdx.graphics.getWidth(), 20f);
+		shapeRenderer.end();
+
+		if (mundus.continueLoading()) {
+			// Loading complete, load a scene.
+			scene = mundus.loadScene("Main Scene.mundus");
+
+			scene.cam.position.set(0, 40, 0);
+
+			// setup input
+			controller = new FirstPersonCameraController(scene.cam);
+			controller.setVelocity(200f);
+			Gdx.input.setInputProcessor(controller);
+
+			// Update our game state
+			gameState = GameState.PLAYING;
+		}
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
