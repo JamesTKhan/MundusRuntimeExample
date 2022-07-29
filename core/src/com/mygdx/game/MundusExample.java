@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mbrlabs.mundus.commons.Scene;
 import com.mbrlabs.mundus.commons.assets.SkyboxAsset;
+import com.mbrlabs.mundus.commons.assets.meta.MetaFileParseException;
 import com.mbrlabs.mundus.runtime.Mundus;
 import net.mgsx.gltf.scene3d.attributes.FogAttribute;
 
@@ -63,8 +65,20 @@ public class MundusExample extends ApplicationAdapter {
 		cameraDestinations.add(new Vector3(1500, 300, 1500));
 		cameraDestinations.add(new Vector3(100, 300, 1500));
 
+		Mundus.Config config = new Mundus.Config();
+		config.autoLoad = false; // Do not autoload, we want to queue custom assets
+		config.asyncLoad = true; // Do asynchronous loading
+
 		// Start asynchronous loading
-		mundus = new Mundus(Gdx.files.internal("MundusExampleProject"), true);
+		mundus = new Mundus(Gdx.files.internal("MundusExampleProject"), config);
+		try {
+			mundus.getAssetManager().queueAssetsForLoading(true);
+		} catch (MetaFileParseException e) {
+			e.printStackTrace();
+		}
+
+		// Queuing up your own assets to include in asynchronous loading
+		mundus.getAssetManager().getGdxAssetManager().load("beach.mp3", Music.class);
 	}
 
 	@Override
@@ -156,6 +170,11 @@ public class MundusExample extends ApplicationAdapter {
 
 			// Update our game state
 			gameState = GameState.PLAYING;
+
+			// Retrieve custom asset we queued
+			Music music = mundus.getAssetManager().getGdxAssetManager().get("beach.mp3");
+			music.setVolume(0.05f);
+			music.play();
 		}
 	}
 
