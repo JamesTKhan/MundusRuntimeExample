@@ -29,7 +29,7 @@ allprojects {
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
-        mundusVersion = '0.3.1'
+        mundusVersion = 'v0.4.0'
         gltfVersion = '2.0.0-rc.1' // Only needed if targeting HTML, version should match what Mundus uses
     }
 
