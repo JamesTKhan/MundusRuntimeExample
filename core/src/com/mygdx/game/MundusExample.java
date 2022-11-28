@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.FirstPersonCameraController;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -24,7 +23,6 @@ import static com.badlogic.gdx.Application.LOG_INFO;
 
 public class MundusExample extends ApplicationAdapter {
 	private FPSLogger fpsLogger;
-	private ModelBatch batch;
 
 	private Mundus mundus;
 	private Scene scene;
@@ -48,7 +46,6 @@ public class MundusExample extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		batch = new ModelBatch();
 		fpsLogger = new FPSLogger();
 
 		Gdx.app.setLogLevel(LOG_INFO);
@@ -180,7 +177,6 @@ public class MundusExample extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		batch.dispose();
 		mundus.dispose();
 	}
 }
