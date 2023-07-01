@@ -23,14 +23,13 @@ allprojects {
     version = '1.0'
     ext {
         appName = "MundusRuntimeExample"
-        gdxVersion = '1.10.0'
+        gdxVersion = '1.11.0'
         roboVMVersion = '2.3.16'
-        box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.2.1'
-        mundusVersion = 'v0.4.0'
-        gltfVersion = '2.0.0-rc.1' // Only needed if targeting HTML, version should match what Mundus uses
+        mundusVersion = 'v0.5.0'
+        gltfVersion = '2.1.0' // Only needed if targeting HTML, version should match what Mundus uses
     }
 
     repositories {

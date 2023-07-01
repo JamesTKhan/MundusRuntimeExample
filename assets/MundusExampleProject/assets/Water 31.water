@@ -1,12 +1,15 @@
-#Wed Jul 27 09:53:05 EDT 2022
+#Sat Jul 01 14:55:23 EDT 2023
 waveSpeed=0.03
 shineDamper=20.0
 foamScale=0.8
 foamFallOffDistance=12.0
 waveStrength=0.04
+color=007fae33
 tiling=0.04
 dudv=dudv
+cullFace=1029
 reflectivity=0.6
+maxVisibleDepth=100.0
 foamEdgeDistance=0.2
 normalMap=waterNormal
 foamEdgeBias=0.0

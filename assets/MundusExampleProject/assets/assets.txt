@@ -56,9 +56,11 @@ Terrain 2.terra
 Terrain 2.terra.meta
 Terrain 25.terra
 Terrain 25.terra.meta
+terrain_default.mat
+terrain_default.mat.meta
+Water 31.water
+Water 31.water.meta
 waterFoam.png
 waterFoam.png.meta
 waterNormal.png
 waterNormal.png.meta
-Water 31.water
-Water 31.water.meta

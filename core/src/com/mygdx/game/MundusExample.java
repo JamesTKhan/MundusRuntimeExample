@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mbrlabs.mundus.commons.Scene;
 import com.mbrlabs.mundus.commons.assets.SkyboxAsset;
 import com.mbrlabs.mundus.commons.assets.meta.MetaFileParseException;
+import com.mbrlabs.mundus.commons.utils.LightUtils;
 import com.mbrlabs.mundus.runtime.Mundus;
 import net.mgsx.gltf.scene3d.attributes.FogAttribute;
 
@@ -30,9 +31,8 @@ public class MundusExample extends ApplicationAdapter {
 	private GameState gameState = GameState.LOADING;
 
 	private FirstPersonCameraController controller;
-	private OrthographicCamera guiCamera;
 	private ShapeRenderer shapeRenderer;
-	private Color mundusTeal = new Color(0x00b695ff);
+	private final Color mundusTeal = new Color(0x00b695ff);
 
 	private final float camFlySpeed = 20f;
 	private Array<Vector3> cameraDestinations;
@@ -50,7 +50,7 @@ public class MundusExample extends ApplicationAdapter {
 
 		Gdx.app.setLogLevel(LOG_INFO);
 
-		guiCamera = new OrthographicCamera();
+		OrthographicCamera guiCamera = new OrthographicCamera();
 		guiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		shapeRenderer = new ShapeRenderer();
@@ -111,7 +111,8 @@ public class MundusExample extends ApplicationAdapter {
 			ColorAttribute colorAttribute = (ColorAttribute) scene.environment.get(ColorAttribute.Fog);
 			colorAttribute.color.set(Color.BLACK);
 
-			scene.environment.getAmbientLight().intensity = 0.1f;
+			scene.environment.getAmbientLight().color.set(Color.DARK_GRAY);
+			LightUtils.getDirectionalLight(scene.environment).intensity = 0.5f;
 
 			FogAttribute fogAttribute = (FogAttribute) scene.environment.get(FogAttribute.FogEquation);
 			fogAttribute.value.x = 100f; // Near plane
