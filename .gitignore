@@ -103,6 +103,9 @@ gradle-app.setting
 /ios/build/
 /teavm/.gradle/
 /teavm/build/
+/lwjgl3/.gradle/
+/lwjgl3/build/
+
 
 ## OS Specific
 .DS_Store
